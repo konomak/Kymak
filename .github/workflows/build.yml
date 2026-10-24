@@ -16,10 +16,12 @@ jobs:
       - uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: 9.4.1
-      - name: Compilar APK
+      - name: Compilar APK (rapido, otimizado)
         working-directory: kymak
-        run: gradle assembleArm64Debug --no-daemon --stacktrace
+        run: gradle assembleArm64Release --no-daemon --stacktrace || gradle assembleArm64Debug --no-daemon --stacktrace
       - uses: actions/upload-artifact@v4
         with:
           name: KYMAK-apk
-          path: kymak/app/build/outputs/apk/arm64/debug/*.apk
+          path: |
+            kymak/app/build/outputs/apk/arm64/release/*.apk
+            kymak/app/build/outputs/apk/arm64/debug/*.apk
